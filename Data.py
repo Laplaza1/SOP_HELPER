@@ -1,8 +1,6 @@
 import os
 
 
-
-
 import httpx
 from openai import OpenAI
 
@@ -54,13 +52,20 @@ user1.add_sop({"Open Door": ["Twist knob", "push forward"]})
 print(user1.SOPs)
 print(user1.remove_sop(1))
 print(user1.SOPs)
+
+
 def chat():
     response = client.responses.create(
-    model="grok-4",
-    input=[
-        {"role": "system", "content": "You are Grok, an AI agent built to answer helpful questions.Focus your responses to utilize the SOPs"},
-        {"role": "user", "content": f"From the SOPs {user1.SOPs} please tell me what to do after I buy an egg at the store"},
-    ],
-)
+        model="grok-4",
+        input=[
+            {
+                "role": "system",
+                "content": "You are Grok, an AI agent built to answer helpful questions.Focus your responses to utilize the SOPs",
+            },
+            {
+                "role": "user",
+                "content": f"From the SOPs {user1.SOPs} please tell me what to do after I buy an egg at the store",
+            },
+        ],
+    )
     return response.output_text
-
