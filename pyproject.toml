@@ -1,0 +1,22 @@
+[project]
+name = "SOP_Site"
+version = "0.1.0"
+description = "Rag project focused on providing expanding direction towards SOPs"
+authors = [
+    { name = "Sky S" }
+]
+dependencies = [
+    "django>=6.0.7",
+    "fastembed>=0.8.0",
+    "numpy>=2.5.1",
+    "qdrant-client>=1.18.0",
+    "sentence-transformers>=5.6.1",
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["SOP_Chat*", "SOP_Site*"]   # only the real packages
+exclude = ["Lib*", "Include*", "tests*", "docs*"]
