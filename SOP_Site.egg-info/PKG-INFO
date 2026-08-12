@@ -6,6 +6,8 @@ Author: Sky S
 Requires-Dist: django>=6.0.7
 Requires-Dist: dotenv>=0.9.9
 Requires-Dist: fastembed>=0.8.0
+Requires-Dist: langchain>=1.3.14
+Requires-Dist: langgraph>=1.2.10
 Requires-Dist: numpy>=2.5.1
 Requires-Dist: openai>=2.52.0
 Requires-Dist: pdfplumber>=0.11.10

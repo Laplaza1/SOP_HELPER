@@ -23,5 +23,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("base/",views.base),
     path("semantic_search/",views.semantic_search),
-    path("sop/",views.create_sop)
+    path("sop/",views.create_sop),
+    path("upload/",views.upload_file)
 ]

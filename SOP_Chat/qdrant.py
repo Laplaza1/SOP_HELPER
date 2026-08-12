@@ -11,7 +11,7 @@ QDRANT_API_KEY = None
 QDRANT_COLLECTION = "sop"  
 
 client = QdrantClient(
-    url="http://localhost:32772",
+    url=QDRANT_HOST,
     api_key=None
 )
 

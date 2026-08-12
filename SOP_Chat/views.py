@@ -133,3 +133,30 @@ def semantic_search(request:HttpRequest)->HttpResponse:
     response = chat_model(Query=query,Context=hits)
 
     return render(request, 'base.html', {'results': response}) 
+
+
+
+# fileupload/views.py
+from django.shortcuts import render, redirect
+from .forms import DocumentForm
+from .models import Document
+
+def upload_file(request):
+    if request.method == 'POST':
+
+        form = DocumentForm(request.POST, request.FILES)
+        
+       
+        if form.is_valid():
+            doc = form.save()
+            
+            # Optionally validate file type/content
+            if doc.uploaded_file.name.endswith('.pdf'):
+                doc.file_type = 'pdf'
+            elif doc.uploaded_file.name.endswith('.txt'):
+                doc.file_type = 'txt'
+            doc.save()
+            return redirect('success')
+    else:
+        form = DocumentForm()
+    return render(request, 'upload_form.html', {'form': form})

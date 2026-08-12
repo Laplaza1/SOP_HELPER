@@ -1,8 +1,10 @@
 pyproject.toml
 SOP_Chat/__init__.py
 SOP_Chat/admin.py
+SOP_Chat/agent.py
 SOP_Chat/apps.py
 SOP_Chat/embeder.py
+SOP_Chat/example_PDF_conversion.py
 SOP_Chat/models.py
 SOP_Chat/qdrant.py
 SOP_Chat/tests.py
