@@ -16,6 +16,9 @@ logger = logging.getLogger(__name__)
 
 def chat_model(Query:str|None,Context:list[str]|None)->str|None:
     """
+
+    Desc:
+        The interface between Foundation model with the query and context 
     
     Args:
         Query :(str|None): The query string.
@@ -70,6 +73,21 @@ def base(request:HttpRequest):
 
 @csrf_exempt
 def create_sop(request:HttpRequest)->JsonResponse:
+    '''
+        Desc:
+            after processing the SOP Fastember function will process it into embeddings and upload it into Vector DB
+
+        POST PARAMS:
+            ServiceLevel: What level user has to be to access it
+
+            SOP: the Stand Operating Procedure
+
+            STEP: The step description
+         
+        
+    '''
+
+
     logger.info(f"route {create_sop.__name__} started by {request.META.get("REMOTE_ADDR")}")
     """
     Upserts an SOP with the struct 
@@ -104,7 +122,11 @@ def create_sop(request:HttpRequest)->JsonResponse:
 
 def semantic_search(request:HttpRequest)->HttpResponse:
     """
-    Checks query within sops
+    Checks query within sops:
+    takes in "q" from url PARAMS as the query.
+    takes in "sop" from url PARAMS as the SOP to filter by
+    Chat_model processes the hits from the query and provides insight from that text
+
     """
 
     logger.info(f"route {semantic_search.__name__} started by {request.META.get("REMOTE_ADDR")}")
@@ -142,6 +164,13 @@ from .forms import DocumentForm
 from .models import Document
 
 def upload_file(request):
+
+    '''
+    
+    :Description: IF request is POST then document is saved to the Media/Document folder ELSE the user is passed a form for their documents 
+    
+    
+    '''
     if request.method == 'POST':
 
         form = DocumentForm(request.POST, request.FILES)

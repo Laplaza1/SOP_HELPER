@@ -18,6 +18,16 @@ client = QdrantClient(
 
  
 def get_or_create_collection():
+    """
+    Description:
+        Creates collection using the qdrant_client module.
+        Automatically makes a collection with a name specified in by the QDRANT_COLLECTION var.
+        Default config is the size of the embedding vector which is 384 and they MUST match
+        Distance is set to COSINE.
+
+    
+    
+    """
     #Create Collection
     if not client.collection_exists(QDRANT_COLLECTION):
         client.create_collection(

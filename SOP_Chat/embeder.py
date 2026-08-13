@@ -5,6 +5,11 @@ from fastembed import TextEmbedding
 import time
 
 def sentenceTransformer(input:str|int)->list:
+    """
+    Desc:
+        Uses all-MiniLM-L6-v2 to convert into 384 Dim Vectors
+    
+    """
     start = time.time()
     model = SentenceTransformer('all-MiniLM-L6-v2')
     embeddings = model.encode([input])
@@ -17,6 +22,8 @@ def sentenceTransformer(input:str|int)->list:
 
 def fastembeder(input:str|int)->list:
     """
+    Desc:
+        creates embedding from BAAI/bge-small-en-v1.5 into a 384 Dim vector
 
     Params 
         :input: Can be a string or an Int,this will be converted into an 384 dim array along with other numpy array information
@@ -30,9 +37,7 @@ def fastembeder(input:str|int)->list:
 
     # Generate embeddings
     texts = input
-    print(texts)
     embeddings = list(embedder.embed(texts))
-    print(embeddings)
     print("fastembed took:",time.time()-start)
 
 
