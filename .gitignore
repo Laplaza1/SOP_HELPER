@@ -2,10 +2,12 @@
 settings.py
 __pycache__
 app.log
+*.log
 .sqlite3
 db
-db.sqlite
-.PDF
-.pdf
-db.sqlite3
-Example_SOP.pdf
+*.sqlite
+*.PDF
+*.pdf
+*.sqlite3
+media/documents/**/*.pdf
+documents/**/*.pdf

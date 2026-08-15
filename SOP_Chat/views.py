@@ -11,6 +11,8 @@ import json
 from openai import OpenAI
 import logging
 from .example_PDF_conversion import *
+import os
+from django.utils.text import slugify
 
 
 logging.basicConfig(filename='app.log', level=logging.INFO, datefmt='%y%m%d %H:%M:%S', format='%(levelname)s: %(message)s')
@@ -153,7 +155,7 @@ def semantic_search(request:HttpRequest)->HttpResponse:
     )
 
     
-    print(f"Found some hits for '{query}'")
+    print(f"Found some hits for Query: '{query}'")
     print(f"\nHits: {hits}")
     response = chat_model(Query=query,Context=hits)
 
@@ -180,11 +182,18 @@ def upload_file(request):
         
        
         if form.is_valid():
-            doc = form.save()
+            doc = form.save(commit=False)
             
             # Optionally validate file type/content
             if doc.uploaded_file.name.endswith('.pdf'):
                 doc.file_type = 'pdf'
+                original_name = doc.uploaded_file.name
+                ext = os.path.splitext(original_name)[1].lower() or '.pdf'
+                safe_title = slugify(doc.title) or 'untitled'
+                new_name = f"{safe_title}{ext}"
+                doc.uploaded_file.name = new_name
+                doc.save()
+                extract_pdf('media\\' +doc.uploaded_file.name,doc.title)
             elif doc.uploaded_file.name.endswith('.txt'):
                 doc.file_type = 'txt'
 
@@ -192,8 +201,13 @@ def upload_file(request):
             doc.save()
 
             ##Extracts PDF from here
-            extract_pdf(request.FILES)
+            
             return redirect('success')
     else:
         form = DocumentForm()
     return render(request, 'upload_form.html', {'form': form})
+
+
+
+def login(request):
+    pass
