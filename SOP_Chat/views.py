@@ -10,6 +10,9 @@ import os
 import json
 from openai import OpenAI
 import logging
+from .example_PDF_conversion import *
+
+
 logging.basicConfig(filename='app.log', level=logging.INFO, datefmt='%y%m%d %H:%M:%S', format='%(levelname)s: %(message)s')
 logger = logging.getLogger(__name__)
 
@@ -184,7 +187,12 @@ def upload_file(request):
                 doc.file_type = 'pdf'
             elif doc.uploaded_file.name.endswith('.txt'):
                 doc.file_type = 'txt'
+
+            #Saves document into media/document
             doc.save()
+
+            ##Extracts PDF from here
+            extract_pdf(request.FILES)
             return redirect('success')
     else:
         form = DocumentForm()
