@@ -1,9 +1,11 @@
+from pathlib import Path
+
 from django.db import models
 import os
 from django.utils.text import slugify
 from django.contrib.postgres.fields import ArrayField
-from ..SOP_Site.settings import MEDIA_ROOT
-
+BASE_DIR = Path(__file__).resolve().parent
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 class Site_Account(models.Model):
 
@@ -25,7 +27,7 @@ class Site_Account(models.Model):
         ##permissions a site has over its data
         permissions = [("modify_sops","Add/Drop Sops"),("modify_users","change User settings")]
         ##notification options
-        Notification = ["email"]
+        
 
 
     site_name = models.CharField(max_length=255,primary_key=True)
@@ -58,11 +60,11 @@ class User(models.Model):
     class Meta:
         app_label = "SOP_Chat"
         #What types of users can see the SOPs
-        CATEGORY_CHOICES = [
-        ('User', 'User'),
-        ('Superuser', 'Superuser'),
-        ('Admin', 'Admin'),
-        ]
+    CATEGORY_CHOICES = [
+    ('User', 'User'),
+    ('Superuser', 'Superuser'),
+    ('Admin', 'Admin'),
+    ]
 
     site_name = models.ForeignKey(
                     Site_Account,
@@ -74,7 +76,7 @@ class User(models.Model):
     password = models.CharField(max_length=45)
     ServiceLevel = models.CharField(
         max_length=10,
-        choices=Meta.CATEGORY_CHOICES,
+        choices=CATEGORY_CHOICES,
         default='User',
     )
 
@@ -115,14 +117,13 @@ class Document(models.Model):
     site_name = models.ForeignKey(
                             Site_Account,
                             on_delete=models.CASCADE,
-                            default=1,
-                            related_name="sops")
+                            related_name="sops",blank=True,null=True)
     
     ##file_type = models.CharField(max_length=20, blank=True) |None # e.g., 'pdf', 'txt'
 
     class Meta:
         app_label = "SOP_Chat"
-        approved_filetypes = [".pdf",".txt"]
+        
 
 
     def remove_sop(self):

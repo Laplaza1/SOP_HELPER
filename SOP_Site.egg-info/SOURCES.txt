@@ -5,10 +5,12 @@ SOP_Chat/agent.py
 SOP_Chat/apps.py
 SOP_Chat/embeder.py
 SOP_Chat/example_PDF_conversion.py
+SOP_Chat/forms.py
 SOP_Chat/models.py
 SOP_Chat/qdrant.py
 SOP_Chat/tests.py
 SOP_Chat/views.py
+SOP_Chat/migrations/0001_initial.py
 SOP_Chat/migrations/__init__.py
 SOP_Site/__init__.py
 SOP_Site/asgi.py

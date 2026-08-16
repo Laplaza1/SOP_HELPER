@@ -11,3 +11,4 @@ db
 *.sqlite3
 media/documents/**/*.pdf
 documents/**/*.pdf
+*.txt

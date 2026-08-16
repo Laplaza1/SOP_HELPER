@@ -3,12 +3,12 @@ import pypdfium2 as pdfium
 from .embeder import *
 from .qdrant import *
 import uuid
+from .agent import handle_SOP
 # Load PDF document
 
 def extract_pdf(file:str,sop):
     pdf = pdfium.PdfDocument(file)
-    print(pdf)
-    
+    all_text =[]
     
 
     
@@ -16,6 +16,7 @@ def extract_pdf(file:str,sop):
     for i, page in enumerate(pdf):
         textpage = page.get_textpage()
         text = textpage.get_text_range()
+        all_text.append(text)
         embeding = fastembeder(text)
         id= str(uuid.uuid4())
         payload = {
@@ -25,6 +26,6 @@ def extract_pdf(file:str,sop):
                         }
         client.upsert(collection_name=QDRANT_COLLECTION,wait=True,points=[PointStruct(id =id,vector=embeding,payload=payload)])
         #print(f"Page {i+1}:{text}")
-
+    handle_SOP("\n".join(all_text))
     # Close the document
     pdf.close()

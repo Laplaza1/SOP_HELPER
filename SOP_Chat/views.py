@@ -13,7 +13,8 @@ import logging
 from .example_PDF_conversion import *
 import os
 from django.utils.text import slugify
-
+from .agent import *
+from django.http import JsonResponse
 
 logging.basicConfig(filename='app.log', level=logging.INFO, datefmt='%y%m%d %H:%M:%S', format='%(levelname)s: %(message)s')
 logger = logging.getLogger(__name__)
@@ -193,6 +194,7 @@ def upload_file(request):
                 new_name = f"{safe_title}{ext}"
                 doc.uploaded_file.name = new_name
                 doc.save()
+                
                 extract_pdf('media\\' +doc.uploaded_file.name,doc.title)
             elif doc.uploaded_file.name.endswith('.txt'):
                 doc.file_type = 'txt'
@@ -202,7 +204,7 @@ def upload_file(request):
 
             ##Extracts PDF from here
             
-            return redirect('success')
+            return JsonResponse({'Success':True},status=200)
     else:
         form = DocumentForm()
     return render(request, 'upload_form.html', {'form': form})

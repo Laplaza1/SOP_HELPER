@@ -1,14 +1,15 @@
 from qdrant_client import QdrantClient
 from qdrant_client.http.models import Distance, VectorParams, PointStruct, Filter
 from qdrant_client.models import PointStruct
-
+import dotenv
 
 import os
+dotenv.load_dotenv(".env")
 
-
-QDRANT_HOST = os.getenv("QDRANT_HOST", "http://localhost:32768")
+QDRANT_HOST = os.getenv("QDRANT_HOST")
 QDRANT_API_KEY = None 
 QDRANT_COLLECTION = "sop"  
+
 
 client = QdrantClient(
     url=QDRANT_HOST,
